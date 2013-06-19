@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>InfoTrain</display-name>
+  <servlet>
+    <servlet-name>JAX-RS Servlet</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <load-on-startup>1</load-on-startup>
+    
+    
+  <init-param>
+    <param-name>DatabasePath</param-name>
+    <param-value>ittest.ciclkt658kqx.us-west-2.rds.amazonaws.com:1521:INFOTEST</param-value>
+  </init-param>
+  <init-param>
+    <param-name>DatabaseUsername</param-name>
+    <param-value>sa</param-value>
+  </init-param>
+  <init-param>
+    <param-name>DatabasePassword</param-name>
+    <param-value>password</param-value>
+  </init-param>
+
+  </servlet> 
+    
+  <!--  
+  //<servlet>
+  //<servlet-name>Database</servlet-name>
+  //<servlet-class>dao.Database</servlet-class>
+  //<init-param>
+  //<param-name>dao.Database.databasePath</param-name>
+  //  <param-value>ittest.ciclkt658kqx.us-west-2.rds.amazonaws.com:1521:INFOTEST</param-value>
+  //</init-param>
+  //</servlet> 
+  -->
+  <servlet-mapping>
+    <servlet-name>JAX-RS Servlet</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+</web-app>
