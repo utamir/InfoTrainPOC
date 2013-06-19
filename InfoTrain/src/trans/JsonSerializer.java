@@ -36,7 +36,7 @@ public class JsonSerializer{
 	}
 
 	private static JsonElement _serialize(ResultSet rs, String tag) {
-		
+		JsonObject res = new JsonObject();
 		JsonArray json = new JsonArray();
 		try {
 		ResultSetMetaData rsmd = rs.getMetaData();
@@ -135,7 +135,9 @@ public class JsonSerializer{
 		} catch (Exception e) {
 			throw new JsonParseException("General parsing exception "+e);
 		}
-	    return json;
+		res.add("result", json);
+		
+	    return res;
 	}
 
 }
