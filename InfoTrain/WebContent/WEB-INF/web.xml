@@ -24,10 +24,6 @@
 		</init-param>
 
 	</servlet>
-
-	<!-- //<servlet> //<servlet-name>Database</servlet-name> //<servlet-class>dao.Database</servlet-class> 
-		//<init-param> //<param-name>dao.Database.databasePath</param-name> // <param-value>ittest.ciclkt658kqx.us-west-2.rds.amazonaws.com:1521:INFOTEST</param-value> 
-		//</init-param> //</servlet> -->
 	<servlet-mapping>
 		<servlet-name>JAX-RS Servlet</servlet-name>
 		<url-pattern>/*</url-pattern>

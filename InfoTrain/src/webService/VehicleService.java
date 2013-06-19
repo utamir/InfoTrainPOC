@@ -21,7 +21,7 @@ public class VehicleService extends DatabaseService {
 	@Path("/getvehicles.{type}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response getVehicles(@PathParam("type") String type) {
-		return $Response("SELECT vehicletype, vehiclesn, vehiclevin, licenseplate, color FROM vehicles ORDER BY vehicleid DESC", "Vehicle", type);
+		return $Response("SELECT * FROM vehicles", "Vehicle", type);
 	}
 }
 
