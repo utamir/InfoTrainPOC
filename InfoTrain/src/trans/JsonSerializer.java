@@ -4,6 +4,8 @@
 package trans;
 
 import java.sql.*;
+import java.util.UUID;
+
 import com.google.gson.*;
 
 /**
@@ -46,7 +48,7 @@ public class JsonSerializer{
 	      for (int i=1; i<numColumns+1; i++) {
 	    	String columnName = Utils.ToCamelCase(rsmd.getColumnName(i));	        
 	        
-	        switch(rsmd.getColumnType(i)){
+	     switch(rsmd.getColumnType(i)){
 	        case java.sql.Types.BIGINT:	    
 	        case java.sql.Types.INTEGER:	   
 	        case java.sql.Types.SMALLINT:
@@ -108,9 +110,19 @@ public class JsonSerializer{
 		    		obj.addProperty(columnName,time.toString());
 		    	}
 			    break;
+		    case java.sql.Types.BINARY:
+		    case java.sql.Types.VARBINARY:
+		    	//this is guid, but we will serialize as string
+		    	//TODO: Find a way to differ GUIDS from any other binary blobs
+		    	byte[] bytes = (byte[])rs.getObject(i);			    	
+		    	if(!rs.wasNull()){
+		    		UUID gval = UUID.nameUUIDFromBytes(bytes);
+		    		obj.addProperty(columnName,gval.toString());
+		    	}
+		    	break;
 		    default:	
 		    	//TODO: Leave it by now to assure that all types are covered.
-		    	throw new JsonParseException("Parser of "+ rsmd.getColumnTypeName(i)+" is not implemented [Column: "+rsmd.getColumnName(i)+"].");
+		    	throw new JsonParseException("Parser of "+ rsmd.getColumnTypeName(i)+"("+rsmd.getColumnType(i)+") is not implemented [Column: "+rsmd.getColumnName(i)+"].");
 	        }	        
 		        
 	      }

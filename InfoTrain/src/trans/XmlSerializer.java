@@ -5,6 +5,7 @@ package trans;
 
 import java.io.*;
 import java.sql.*;
+import java.util.UUID;
 
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
@@ -138,9 +139,20 @@ private static Document _serialize(ResultSet rs, String tag) throws Exception {
 	        		obj.appendChild(n);
 		    	}
 			    break;
+		    case java.sql.Types.BINARY:
+		    case java.sql.Types.VARBINARY:
+		    	//this is guid, but we will serialize as string
+		    	//TODO: Find a way to differ GUIDS from any other binary blobs
+		    	byte[] bytes = (byte[])rs.getObject(i);			    	
+		    	if(!rs.wasNull()){
+		    		UUID gval = UUID.nameUUIDFromBytes(bytes);
+	        		n.setTextContent(String.valueOf(gval.toString()));
+	        		obj.appendChild(n);
+		    	}
+		    	break;
 		    default:	
 		    	//TODO: Leave it by now to assure that all types are covered.
-		    	throw new Exception("Parser of "+ rsmd.getColumnTypeName(i)+" is not implemented [Column: "+rsmd.getColumnName(i)+"].");
+		    	throw new Exception("Parser of "+ rsmd.getColumnTypeName(i)+"("+rsmd.getColumnType(i)+") is not implemented [Column: "+rsmd.getColumnName(i)+"].");
 	        }	        
 		        
 	      }
